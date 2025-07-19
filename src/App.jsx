@@ -4,8 +4,6 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import AddVent from './pages/AddVent';
-
-
 import Navbar from './components/Navbar';
 
 
@@ -61,9 +59,9 @@ const App = () => {
   return (
     <Router>
       <AuthProvider>
-        <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+        <div className="min-h-screen flex flex-col">
           <Navbar />
-          <main style={{ flexGrow: 1, padding: '30px 0' }}>
+          <main className="flex-grow py-8">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/add-vent" element={<AddVent />} />
@@ -71,7 +69,7 @@ const App = () => {
               <Route path="/login" element={<Login />} />
             </Routes>
           </main>
-          <footer className="footer">
+          <footer className="bg-gray-800 text-white text-center p-4 mt-8 rounded-t-xl shadow-inner">
             <p>&copy; {new Date().getFullYear()} Vent System. All rights reserved.</p>
           </footer>
         </div>

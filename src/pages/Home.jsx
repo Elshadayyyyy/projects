@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import VentCard from '../components/VentCard';
 
-
 const Home = () => {
   const [vents, setVents] = useState(() => {
     const storedVents = localStorage.getItem('vents');
@@ -35,11 +34,11 @@ const Home = () => {
           ? {
               ...vent,
               replies: [
-                ...(vent.replies || []), 
+                ...(vent.replies || []),
                 {
                   id: Date.now(),
                   content: replyContent,
-                  author: "Anonymous", 
+                  author: "Anonymous",
                   timestamp: new Date().toISOString(),
                 },
               ],
@@ -50,7 +49,6 @@ const Home = () => {
   };
 
   const handleDeleteVent = (id) => {
-
     if (window.confirm("Are you sure you want to delete this vent?")) {
       setVents(prevVents => prevVents.filter(vent => vent.id !== id));
     }
@@ -59,12 +57,12 @@ const Home = () => {
   const sortedVents = [...vents].sort((a, b) => (b.upvotes - b.downvotes) - (a.upvotes - a.downvotes));
 
   return (
-    <div className="container">
-      <h2 className="text-center" style={{ fontSize: '36px', fontWeight: '800', color: '#333', marginBottom: '40px' }}>All Vents</h2>
+    <div className="container mx-auto p-6">
+      <h2 className="text-4xl font-extrabold text-gray-900 mb-8 text-center">All Vents</h2>
       {sortedVents.length === 0 ? (
-        <p className="text-center" style={{ fontSize: '18px', color: '#666' }}>No vents yet. Be the first to vent!</p>
+        <p className="text-center text-gray-600 text-lg">No vents yet. Be the first to vent!</p>
       ) : (
-        <div className="vent-grid">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {sortedVents.map(vent => (
             <VentCard
               key={vent.id}
@@ -72,7 +70,7 @@ const Home = () => {
               onUpvote={handleUpvote}
               onDownvote={handleDownvote}
               onAddReply={handleAddReply}
-              onDeleteVent={handleDeleteVent} 
+              onDeleteVent={handleDeleteVent}
             />
           ))}
         </div>

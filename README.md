@@ -9,6 +9,7 @@ Vent System is an anonymous message board application built with React. It allow
 - Upvote/Downvote Vents
 - Reply Feature
 - Delete Own Vents
+- hamburger menu for smaller screens
 
 # Setup Instructions
 To get this project up and running on your local machine, follow these steps:
@@ -30,6 +31,6 @@ You can inspect the data stored by the application by opening your browser's Dev
 
 # demo
 
+![login](public/Login.png)
 ![home](public/Home.png)
-![register](public/register.png)
-![addVent](public/addVent.png)
+![Add vent](public/AddVent.png)

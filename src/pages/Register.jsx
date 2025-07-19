@@ -32,45 +32,44 @@ const Register = () => {
   };
 
   return (
-    <div className="container">
-      <h2 className="text-center" style={{ fontSize: '36px', fontWeight: '800', color: '#333', marginBottom: '40px' }}>Register</h2>
-      <form onSubmit={handleSubmit} className="form-card">
+    <div className="container mx-auto p-6 max-w-md">
+      <h2 className="text-4xl font-extrabold text-gray-900 mb-8 text-center">Register</h2>
+      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-xl shadow-lg border border-gray-200">
         {message && (
-          <div className={`message-box ${message.includes('successful') ? 'message-success' : 'message-error'}`}>
+          <div className={`mb-4 p-3 rounded-lg text-center ${message.includes('successful') ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
             {message}
           </div>
         )}
-        <div className="form-group">
-          <label htmlFor="reg-username" className="form-label">Username</label>
+        <div className="mb-6">
+          <label htmlFor="reg-username" className="block text-gray-700 text-lg font-medium mb-2">Username</label>
           <input
             type="text"
             id="reg-username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="form-input"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg"
             required
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="reg-password" className="form-label">Password</label>
+        <div className="mb-6">
+          <label htmlFor="reg-password" className="block text-gray-700 text-lg font-medium mb-2">Password</label>
           <input
             type="password"
             id="reg-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="form-input"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg"
             required
           />
         </div>
         <button
           type="submit"
-          className="btn btn-success"
-          style={{ width: '100%' }} 
+          className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-all duration-300 transform hover:scale-105 text-xl block mx-auto"
         >
           Register
         </button>
-        <p className="text-center" style={{ marginTop: '25px', color: '#666', fontSize: '18px' }}>
-          Already have an account? <Link to="/login" style={{ color: '#007bff', textDecoration: 'none', fontWeight: 'bold' }}>Login here</Link>
+        <p className="mt-6 text-center text-gray-600 text-lg">
+          Already have an account? <Link to="/login" className="text-blue-600 hover:underline font-semibold">Login here</Link>
         </p>
       </form>
     </div>
