@@ -41,7 +41,7 @@ const Login = () => {
         </label>
 
         <div className="text-right">
-          <button className="bg-blue-600 text-white px-4 py-2 rounded">Login</button>
+          <button className="bg-black-600 text-white px-4 py-2 rounded">Login</button>
         </div>
 
         <p className="mt-4 text-sm text-gray-600">Don't have an account? <Link to="/register" className="text-blue-600">Register</Link></p>

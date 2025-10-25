@@ -42,7 +42,7 @@ const Register = () => {
         </label>
 
         <div className="text-right">
-          <button className="bg-blue-600 text-white px-4 py-2 rounded">Register</button>
+          <button className="bg-black-600 text-white px-4 py-2 rounded">Register</button>
         </div>
 
         <p className="mt-4 text-sm text-gray-600">Already have an account? <Link to="/login" className="text-blue-600">Login</Link></p>
