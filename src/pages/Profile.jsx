@@ -72,7 +72,6 @@ const Profile = () => {
       const next = [...cart, post];
       localStorage.setItem('cart', JSON.stringify(next));
       try { window.dispatchEvent(new Event('storage')); } catch (e) {}
-      alert('Added to cart!');
     }
   };
 

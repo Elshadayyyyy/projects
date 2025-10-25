@@ -92,7 +92,6 @@ export default function Home() {
       localStorage.setItem('cart', JSON.stringify(next));
       setCart(next);
       try { window.dispatchEvent(new Event('storage')); } catch (e) {}
-      alert(`${post.caption} added to cart!`);
     }
   };
 

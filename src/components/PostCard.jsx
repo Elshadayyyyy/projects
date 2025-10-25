@@ -23,7 +23,6 @@ const PostCard = ({ post, onToggleLike, onAddComment, onDeletePost, onAddToCart 
     if (!post.price) return;
     if (typeof onAddToCart === 'function') {
       onAddToCart(post);
-      alert('Added to cart!');
     } else {
       // fallback to localStorage if parent didn't provide handler
       const cart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -31,7 +30,6 @@ const PostCard = ({ post, onToggleLike, onAddComment, onDeletePost, onAddToCart 
         localStorage.setItem('cart', JSON.stringify([...cart, post]));
         // notify other components (Navbar) that cart changed
         try { window.dispatchEvent(new Event('storage')); } catch (e) {}
-        alert('Added to cart!');
       }
     }
   };
