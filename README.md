@@ -33,4 +33,4 @@ You can inspect the data stored by the application by opening your browser's Dev
 
 ![login](public/Login.png)
 ![home](public/Home.png)
-![Add vent](public/AddVent.png)
+![Add Vent](public/AddVent.png)
