@@ -24,7 +24,7 @@ export const mockPosts = [
     authorUsername: "lemlem clothes",
     timestamp: new Date().toISOString(),
     caption: "instock!",
-    image: "https://res.cloudinary.com/dw8hyphia/image/upload/v1761418072/shirt_c4hcwf.jpg",
+    image: "https://res.cloudinary.com/dw8hyphia/image/upload/v1761420979/domino-studio-164_6wVEHfI-unsplash_w8xjhm.jpg",
     likes: [],
     comments: [],
     price: 600,
