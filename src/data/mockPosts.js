@@ -1,7 +1,3 @@
-import sampleMakeup from "../assets/sampleMakeup.jpg";
-import sampleCrochet from "../assets/samplecrochet.jpg";
-import sampleClothes from "../assets/shirt.jpg";
-import sampleShoes from "../assets/shoes.jpg";
 export const mockPosts = [
   {
     id: 1,
