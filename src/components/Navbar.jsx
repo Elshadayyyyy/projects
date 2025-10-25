@@ -80,7 +80,7 @@ const Navbar = ({ cartCount }) => {
               <Link to="/login" className="hover:text-gray-700">Login</Link>
               <Link
                 to="/register"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-md"
+                className="bg-black text-white px-3 py-1 rounded-md"
               >
                 Register
               </Link>

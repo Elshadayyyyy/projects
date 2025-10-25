@@ -1,51 +1,76 @@
-import React, { useContext, useState } from 'react';
-import { AuthContext } from '../App';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../App';
 
 const Register = () => {
-  const { register } = useContext(AuthContext);
+  const { register, currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [msg, setMsg] = useState('');
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate('/');
+    }
+  }, [currentUser, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!username || !password) {
-      setMsg('Fill in both fields.');
+      setMessage('Please fill in all fields.');
       return;
     }
-    const ok = register(username, password);
-    if (ok) {
-      setMsg('Registered! You can login now.');
+    if (register(username, password)) {
+      setMessage('Registration successful! You can now log in.');
+      setUsername('');
+      setPassword('');
       navigate('/login');
     } else {
-      setMsg('Username exists, choose another.');
+      setMessage('Username already exists. Please choose a different one.');
     }
   };
 
   return (
-    <div className="container mx-auto px-4 max-w-md">
-      <h1 className="text-3xl font-bold text-center mb-6">Register</h1>
-
-      <form onSubmit={handleSubmit} className="bg-white p-6 border rounded shadow">
-        {msg && <div className="mb-3 text-sm text-red-600">{msg}</div>}
-
-        <label className="block mb-3">
-          <span className="text-sm">Username</span>
-          <input value={username} onChange={(e) => setUsername(e.target.value)} className="mt-1 block w-full px-3 py-2 border rounded" />
-        </label>
-
-        <label className="block mb-3">
-          <span className="text-sm">Password</span>
-          <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" className="mt-1 block w-full px-3 py-2 border rounded" />
-        </label>
-
-        <div className="text-right">
-          <button className="bg-black-600 text-white px-4 py-2 rounded">Register</button>
+    <div className="container mx-auto p-6 max-w-md">
+      <h2 className="text-4xl font-extrabold text-gray-900 mb-8 text-center">Register</h2>
+      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+        {message && (
+          <div className={`mb-4 p-3 rounded-lg text-center ${message.includes('successful') ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+            {message}
+          </div>
+        )}
+        <div className="mb-6">
+          <label htmlFor="reg-username" className="block text-gray-700 text-lg font-medium mb-2">Username</label>
+          <input
+            type="text"
+            id="reg-username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg"
+            required
+          />
         </div>
-
-        <p className="mt-4 text-sm text-gray-600">Already have an account? <Link to="/login" className="text-blue-600">Login</Link></p>
+        <div className="mb-6">
+          <label htmlFor="reg-password" className="block text-gray-700 text-lg font-medium mb-2">Password</label>
+          <input
+            type="password"
+            id="reg-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg"
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          className="bg-black text-white font-bold py-3 px-6 rounded-lg shadow-md transition-all duration-300 transform hover:scale-105 text-xl block mx-auto"
+        >
+          Register
+        </button>
+        <p className="mt-6 text-center text-gray-600 text-lg">
+          Already have an account? <Link to="/login" className="text-blue-600 hover:underline font-semibold">Login here</Link>
+        </p>
       </form>
     </div>
   );
