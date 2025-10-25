@@ -14,11 +14,9 @@ const Shop = () => {
           return mockPosts;
         }
         const corrected = parsed.map((p) => {
-          if (!p.image) {
-            const mp = mockPosts.find((m) => m.id === p.id);
-            return mp ? { ...p, image: mp.image } : p;
-          }
-          return p;
+          // Prefer mockPosts images for demo posts so deployed URLs point to public/assets
+          const mp = mockPosts.find((m) => m.id === p.id);
+          return mp ? { ...p, image: mp.image } : p;
         });
         localStorage.setItem('gebeya_posts', JSON.stringify(corrected));
         return corrected;
@@ -52,6 +50,7 @@ const Shop = () => {
     if (!existing.find(e => e.id === product.id)) {
       const next = [...existing, product];
       localStorage.setItem('cart', JSON.stringify(next));
+      try { window.dispatchEvent(new Event('storage')); } catch (e) {}
       setCart(next);
     }
   };
@@ -124,6 +123,7 @@ const Shop = () => {
                     // clear cart
                     localStorage.setItem('cart', JSON.stringify([]));
                     setCart([]);
+                    try { window.dispatchEvent(new Event('storage')); } catch (e) {}
                     setShowToast(true);
                     setTimeout(() => { setShowToast(false); navigate('/'); }, 2200);
                   }} className="w-full bg-black text-white px-4 py-2 rounded">Checkout</button>

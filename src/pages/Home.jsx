@@ -21,11 +21,10 @@ export default function Home() {
         }
 
         const corrected = parsed.map((p) => {
-          if (!p.image) {
-            const mp = mockPosts.find((m) => m.id === p.id);
-            return mp ? { ...p, image: mp.image } : p;
-          }
-          return p;
+          // Always prefer the demo mockPosts image for seeded demo posts so
+          // production builds (where module-hashed imports differ) still show images.
+          const mp = mockPosts.find((m) => m.id === p.id);
+          return mp ? { ...p, image: mp.image } : p;
         });
         // ensure it's stored under gebeya_posts for consistency
         localStorage.setItem('gebeya_posts', JSON.stringify(corrected));
@@ -87,13 +86,14 @@ export default function Home() {
   };
 
   const handleAddToCart = (post) => {
-    setCart((prev) => {
-      if (!prev.find((item) => item.id === post.id)) {
-        return [...prev, post];
-      }
-      return prev;
-    });
-    alert(`${post.caption} added to cart!`);
+    const prev = JSON.parse(localStorage.getItem('cart') || '[]');
+    if (!prev.find((item) => item.id === post.id)) {
+      const next = [...prev, post];
+      localStorage.setItem('cart', JSON.stringify(next));
+      setCart(next);
+      try { window.dispatchEvent(new Event('storage')); } catch (e) {}
+      alert(`${post.caption} added to cart!`);
+    }
   };
 
   return (

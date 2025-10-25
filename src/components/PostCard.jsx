@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { AuthContext } from '../App';
 import { Link } from 'react-router-dom';
 
-const PostCard = ({ post, onToggleLike, onAddComment, onDeletePost }) => {
+const PostCard = ({ post, onToggleLike, onAddComment, onDeletePost, onAddToCart }) => {
   const { currentUser } = useContext(AuthContext);
   const [commentText, setCommentText] = useState('');
   const isLiked = currentUser ? (post.likes || []).includes(currentUser.id) : false;
@@ -21,13 +21,18 @@ const PostCard = ({ post, onToggleLike, onAddComment, onDeletePost }) => {
 
   const handleCartClick = () => {
     if (!post.price) return;
-    const choice = window.prompt('Type "1" to Add to Cart, "2" to Buy Now');
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    if (choice === '1') {
-      localStorage.setItem('cart', JSON.stringify([...cart, post]));
+    if (typeof onAddToCart === 'function') {
+      onAddToCart(post);
       alert('Added to cart!');
-    } else if (choice === '2') {
-      alert(`Simulating Chapa payment for ${post.price} ETB`);
+    } else {
+      // fallback to localStorage if parent didn't provide handler
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      if (!cart.find((c) => c.id === post.id)) {
+        localStorage.setItem('cart', JSON.stringify([...cart, post]));
+        // notify other components (Navbar) that cart changed
+        try { window.dispatchEvent(new Event('storage')); } catch (e) {}
+        alert('Added to cart!');
+      }
     }
   };
 
@@ -41,7 +46,7 @@ const PostCard = ({ post, onToggleLike, onAddComment, onDeletePost }) => {
         {post.price && (
           <button 
             onClick={handleCartClick} 
-            className="absolute top-3 right-3 bg-white-400 hover:bg-yellow-500 text-white px-2 py-1 rounded-md text-xs font-semibold"
+            className="absolute top-3 right-3 bg-white-400 hover:bg-gray-500 text-white px-2 py-1 rounded-md text-xs font-semibold"
           >
             🛒
           </button>

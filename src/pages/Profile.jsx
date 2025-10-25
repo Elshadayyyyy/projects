@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { AuthContext } from '../App';
 import PostCard from '../components/PostCard';
+import { mockPosts } from '../data/mockPosts';
 
 const Profile = () => {
   const { username } = useParams();
@@ -21,7 +22,11 @@ const Profile = () => {
       setUser(found || { username });
     }
 
-    const allPosts = JSON.parse(localStorage.getItem('gebeya_posts') || '[]');
+    const allPostsRaw = JSON.parse(localStorage.getItem('gebeya_posts') || '[]');
+    const allPosts = (allPostsRaw || []).map(p => {
+      const mp = mockPosts.find(m => m.id === p.id);
+      return mp ? { ...p, image: mp.image } : p;
+    });
     setPosts(allPosts);
     setUserPosts(allPosts.filter(p => p.authorUsername === username).sort((a,b)=> b.timestamp - a.timestamp));
   }, [username, authCurrentUser]);
@@ -59,6 +64,16 @@ const Profile = () => {
     localStorage.setItem('gebeya_posts', JSON.stringify(next));
     setPosts(next);
     setUserPosts(next.filter(p => p.authorUsername === username));
+  };
+
+  const handleAddToCart = (post) => {
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    if (!cart.find(c => c.id === post.id)) {
+      const next = [...cart, post];
+      localStorage.setItem('cart', JSON.stringify(next));
+      try { window.dispatchEvent(new Event('storage')); } catch (e) {}
+      alert('Added to cart!');
+    }
   };
 
   return (
@@ -124,6 +139,7 @@ const Profile = () => {
               onToggleLike={toggleLike}
               onAddComment={addComment}
               onDeletePost={deletePost}
+              onAddToCart={handleAddToCart}
             />
           </div>
         </div>

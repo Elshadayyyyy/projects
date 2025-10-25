@@ -21,6 +21,7 @@ const Cart = () => {
     if (!window.confirm('Clear cart?')) return;
     localStorage.setItem('cart', JSON.stringify([]));
     setCart([]);
+    try { window.dispatchEvent(new Event('storage')); } catch (e) {}
   };
 
   const total = cart.reduce((s, p) => s + (p.price || 0), 0);
@@ -41,6 +42,8 @@ const Cart = () => {
     // clear cart
     localStorage.setItem('cart', JSON.stringify([]));
     setCart([]);
+
+  try { window.dispatchEvent(new Event('storage')); } catch (e) {}
 
     setShowToast(true);
     setTimeout(() => {
